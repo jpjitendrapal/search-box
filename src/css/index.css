@@ -1,0 +1,42 @@
+body{
+    
+}
+#app{
+
+}
+.page-ct{
+    padding: 15px;
+}
+
+.search-result .user-data, .no-result{
+    padding: 15px;
+}
+li.user-data{
+    list-style: none;
+}
+.user-data:focus{
+    outline: none;
+}
+.search-container{
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+}
+.search-container .search-result{
+    position: absolute;
+    background-color: white;
+    width: 340px;
+    box-sizing: border-box;
+    max-height: 300px;
+    overflow: scroll;
+}
+.search-container .search-input{
+    width: 340px;
+    border: 1px solid;
+    height: 30px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+.search-result .highlight{
+    background-color: lightyellow;
+}
