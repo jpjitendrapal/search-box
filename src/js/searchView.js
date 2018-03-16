@@ -7,13 +7,15 @@ class SearchInput extends React.Component{
         super();
         this.state={
             result: [],
-            showSearchView: false
+            showSearchView: false,
+            clickedResult: ""
         }
         this.searchInp = "";
         this.getSearchResult = this.getSearchResult.bind(this);
         this.resultOnClickAction = this.resultOnClickAction.bind(this);
         this.resultOnKeyPressAction = this.resultOnKeyPressAction.bind(this);
         this.searchInputTypeTimer = null;
+        this.timerId = null;
     }
     
     showSearchResult(result){
@@ -41,19 +43,30 @@ class SearchInput extends React.Component{
 
     getSearchResult(e){
         let res, input = e.target.value, that = this;
-        input = input.toString().trim();
         
-        res = this.props.userData.filter(function(item){
-            if(input.length>0 && JSON.stringify(item).toLowerCase().indexOf(input.toLowerCase()) >= 0){
-                return item;
-            }
+        that.searchInp = input.toString().trim();
+        
+        this.setState({
+            clickedResult: input
         });
-        this.setState(
-            {
-                result: res, 
-                showSearchView: true,
-                clickedResult: e.target.value
+        if(that.timerId){
+            clearTimeout(that.timerId);
+        }
+        // not seding request very frequently
+        that.timerId = setTimeout(function(){
+            let input = that.searchInp;
+            res = that.props.userData.filter(function(item){
+                if(input.length>0 && JSON.stringify(item).toLowerCase().indexOf(input.toLowerCase()) >= 0){
+                    return item;
+                }
             });
+            that.setState(
+                {
+                    result: res, 
+                    showSearchView: true
+                });
+        },200);
+        
     }
     resultOnClickAction(e,name){
         e.preventDefault();
