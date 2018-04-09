@@ -6,8 +6,13 @@ import SearchInput from "./searchView";
 class App extends React.Component {
     constructor() {
         super();
-        this.state = { userData: [] };
-
+        this.state = { userData: [], showSearchResult: true };
+        this.closeSearchResult = this.closeSearchResult.bind(this);
+    }
+    closeSearchResult(val){
+        this.setState({
+            showSearchResult: !val
+        });
     }
     componentWillMount() {
         let data = new UserDataModel().getUserData();
@@ -16,8 +21,8 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="search-page">
-                <SearchInput userData={this.state.userData} />
+            <div className="search-page" onClick={()=>{this.closeSearchResult(true)}}>
+                <SearchInput userData={this.state.userData} closeSearchResult={this.closeSearchResult} showSearchResult={this.state.showSearchResult} />
 
                 <div className="page-ct">
                     <div className="">

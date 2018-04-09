@@ -42,10 +42,12 @@ class SearchInput extends React.Component{
     
 
     getSearchResult(e){
+        e.stopPropagation();
+
         let res, input = e.target.value, that = this;
         
         that.searchInp = input.toString().trim();
-        
+        that.props.closeSearchResult(false);
         this.setState({
             clickedResult: input
         });
@@ -65,7 +67,7 @@ class SearchInput extends React.Component{
                     result: res, 
                     showSearchView: true
                 });
-        },200);
+        },300);
         
     }
     resultOnClickAction(e,name){
@@ -91,8 +93,8 @@ class SearchInput extends React.Component{
         let that = this;
         return (
                 <div className="search-container">
-                    <input className="search-input" type="text" placeholder="Search here" value={this.state.clickedResult} onChange={that.getSearchResult} />
-                    {this.showSearchResult(this.state.result)}
+                    <input className="search-input" type="text" placeholder="Search here" value={this.state.clickedResult} onChange={that.getSearchResult} onClick={function(evt){evt.stopPropagation();}} />
+                    {that.props.showSearchResult && this.showSearchResult(this.state.result)}
                 </div> 
         );
     }
